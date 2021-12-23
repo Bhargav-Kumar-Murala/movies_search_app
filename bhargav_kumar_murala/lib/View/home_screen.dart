@@ -13,11 +13,11 @@ class HomeScreen extends StatelessWidget {
       return Scaffold(
         body: SafeArea(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
                       "Home",
@@ -56,100 +56,103 @@ class HomeScreen extends StatelessWidget {
                   ? const Center(
                       child: CircularProgressIndicator(
                           backgroundColor: Colors.white, color: Colors.amber))
-                  : state.search?.length != null
-                      ? Expanded(
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: state.search?.length,
-                              itemBuilder: (context, index) => Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 5),
-                                    child: Stack(
-                                      alignment: Alignment.bottomLeft,
-                                      children: [
-                                        SizedBox(
-                                          height: 130,
-                                          width: double.infinity,
-                                          child: Card(
-                                            margin: const EdgeInsets.all(0),
-                                            elevation: 0,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 160, top: 15),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    state.search![index].title!,
-                                                    style: const TextStyle(
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  const Text(
-                                                    'state.search![index].genre!',
-                                                    style: TextStyle(
-                                                        fontSize: 10,
-                                                        fontWeight:
-                                                            FontWeight.w300),
-                                                  ),
-                                                  const SizedBox(height: 7),
-                                                  Container(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
+                  : Expanded(
+                      child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: state.search?.length ?? 1,
+                        itemBuilder: (context, index) => state.search?.length !=
+                                null
+                            ? Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 5),
+                                child: Stack(
+                                  alignment: Alignment.bottomLeft,
+                                  children: [
+                                    SizedBox(
+                                      height: 130,
+                                      width: double.infinity,
+                                      child: Card(
+                                        margin: const EdgeInsets.all(0),
+                                        elevation: 0,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 160, top: 15),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                state.search![index].title!,
+                                                style: const TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              const Text(
+                                                'state.search![index].genre!',
+                                                style: TextStyle(
+                                                    fontSize: 10,
+                                                    fontWeight:
+                                                        FontWeight.w300),
+                                              ),
+                                              const SizedBox(height: 7),
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
                                                         horizontal: 15,
                                                         vertical: 3),
-                                                    decoration: BoxDecoration(
-                                                        color: _ratingColors(
-                                                            state, index),
-                                                        borderRadius:
-                                                            const BorderRadius
-                                                                    .all(
-                                                                Radius.circular(
-                                                                    15))),
-                                                    child: Text(
-                                                      state.search![index]
-                                                              .voteAverage!
-                                                              .toString() +
-                                                          " IMDB",
-                                                      style: const TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 12),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
+                                                decoration: BoxDecoration(
+                                                    color: _ratingColors(
+                                                        state, index),
+                                                    borderRadius:
+                                                        const BorderRadius.all(
+                                                            Radius.circular(
+                                                                15))),
+                                                child: Text(
+                                                  state.search![index]
+                                                          .voteAverage!
+                                                          .toString() +
+                                                      " IMDB",
+                                                  style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 12),
+                                                ),
+                                              )
+                                            ],
                                           ),
                                         ),
-                                        Container(
-                                          margin: const EdgeInsets.only(
-                                              left: 10, bottom: 10),
-                                          height: 170,
-                                          width: 130,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            color: Colors.white,
-                                            image: DecorationImage(
-                                              image: _image(state, index),
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                      ),
                                     ),
-                                  )),
-                        )
-                      : Center(
-                          child: Column(
-                          children: [
-                            Image.asset("assets/logo.jpg"),
-                            const SizedBox(height: 20),
-                            const Text('By Bhargav Kumar Murala')
-                          ],
-                        )),
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                          left: 10, bottom: 10),
+                                      height: 170,
+                                      width: 130,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: Colors.white,
+                                        image: DecorationImage(
+                                          image: _image(state, index),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : SingleChildScrollView(
+                                child: Center(
+                                    child: Column(
+                                  children: [
+                                    Image.asset("assets/logo.jpg"),
+                                    const SizedBox(height: 20),
+                                    const Text('By Bhargav Kumar Murala')
+                                  ],
+                                )),
+                              ),
+                      ),
+                    )
             ],
           ),
         ),
